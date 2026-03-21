@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GCN Serviços | Tecnologia & Suporte Seguro</title>
+    
+    <link rel="icon" href="https://img.icons8.com/fluent/48/003d82/services.png" type="image/png">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root { 
+            --primary: #003d82; 
+            --secondary: #28a745; 
+            --accent: #d81b1b;
+            --warning: #ffcc00;
+            --dark: #1a1a1a; 
+            --light: #f4f7f6; 
+            --white: #ffffff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: var(--light); color: var(--dark); scroll-behavior: smooth; line-height: 1.6; }
+
+        /* --- NAVEGAÇÃO --- */
+        nav {
+            background: var(--white);
+            height: 80px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
+        .logo { font-weight: 800; font-size: 1.6rem; color: var(--primary); letter-spacing: 1px; }
+        .nav-links { display: flex; list-style: none; }
+        .nav-links li { padding: 0 15px; position: relative; }
+        .nav-links a { text-decoration: none; color: var(--dark); font-weight: 600; transition: 0.3s; }
+        .nav-links a:hover { color: var(--primary); }
+
+        /* Dropdown */
+        .dropdown { display: none; position: absolute; top: 25px; left: 0; background: var(--white); min-width: 230px; box-shadow: 0 8px 16px rgba(0,0,0,0.1); border-radius: 8px; padding: 10px 0; border-top: 3px solid var(--primary); }
+        .nav-links li:hover .dropdown { display: block; }
+        .dropdown a { padding: 12px 20px; display: block; font-size: 0.9rem; border-bottom: 1px solid #eee; }
+
+        /* --- HERO --- */
+        .hero { 
+            background: linear-gradient(rgba(0, 61, 130, 0.85), rgba(0, 61, 130, 0.85)), url('https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=1350&q=80');
+            background-size: cover; background-position: center;
+            height: 400px; color: var(--white);
+            display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 0 20px;
+        }
+        .hero h1 { font-size: 3rem; margin-bottom: 15px; }
+        .hero p { font-size: 1.2rem; max-width: 800px; opacity: 0.9; }
+
+        .container { max-width: 1200px; margin: auto; padding: 4rem 2rem; }
+
+        /* --- INFO TAXA (CARD) --- */
+        .tax-badge { background: #fff5f5; color: var(--accent); border: 2px solid var(--accent); padding: 10px; border-radius: 8px; font-weight: bold; margin-top: 15px; display: inline-block; animation: pulse 2s infinite; font-size: 0.9rem;}
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.02); } 100% { transform: scale(1); } }
+
+        /* --- SERVIÇOS --- */
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 40px; }
+        .service-card { background: var(--white); border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05); transition: 0.3s; }
+        .service-card:hover { transform: translateY(-10px); }
+        .service-card img { width: 100%; height: 200px; object-fit: cover; }
+        .service-card-body { padding: 25px; text-align: center; }
+
+        /* --- LGPD & BOTÃO --- */
+        .diag-box { background: #fff; padding: 3rem; border-radius: 20px; text-align: center; margin-top: 4rem; box-shadow: 0 10px 40px rgba(0,0,0,0.05); }
+        .lgpd-container { max-width: 600px; margin: 25px auto; text-align: left; background: #f9f9f9; padding: 20px; border-radius: 10px; border: 1px solid #ddd; }
+        .lgpd-container label { display: flex; align-items: flex-start; cursor: pointer; font-size: 0.9rem; color: #444; }
+        .lgpd-container input { margin-right: 12px; margin-top: 4px; width: 18px; height: 18px; }
+
+        .btn-action { background: var(--secondary); color: white; border: none; padding: 18px 45px; border-radius: 50px; font-size: 1.2rem; font-weight: bold; cursor: pointer; text-decoration: none; display: inline-block; transition: 0.3s; }
+        .btn-action:hover { background: #218838; transform: scale(1.05); }
+
+        /* --- FOOTER --- */
+        footer { background: var(--dark); color: #fff; padding: 4rem 1rem; text-align: center; }
+        .tax-banner-footer { background: var(--warning); color: #000; padding: 20px; border-radius: 10px; max-width: 800px; margin: 0 auto 30px; font-weight: bold; font-size: 0.95rem;}
+        
+        /* ESTILO DO CONTADOR DE VISITAS */
+        .visitor-counter { margin-top: 25px; font-size: 0.8rem; opacity: 0.6; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .visitor-counter img { height: 20px; }
+
+        /* --- MODAL --- */
+        .modal { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); align-items: center; justify-content: center; }
+        .modal-content { background: white; padding: 2.5rem; border-radius: 15px; max-width: 600px; width: 90%; color: #333; text-align: left; }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="logo">GCN SERVIÇOS</div>
+    <ul class="nav-links">
+        <li><a href="#">Início</a></li>
+        <li>
+            <a href="#suporte">Suporte <i class="fas fa-chevron-down"></i></a>
+            <div class="dropdown">
+                <a href="https://anydesk.com/pt/downloads" target="_blank"><i class="fas fa-download"></i> Baixar AnyDesk</a>
+                <a href="#diagnostico"><i class="fas fa-laptop-medical"></i> Diagnóstico Online</a>
+                <a href="#servicos"><i class="fas fa-info-circle"></i> Sobre Taxas de Visita</a>
+            </div>
+        </li>
+        <li><a href="#servicos">Serviços Executados</a></li>
+        <li><a href="#contato">Contato</a></li>
+    </ul>
+</nav>
+
+<section class="hero">
+    <h1>GCN Serviços</h1>
+    <p>Tecnologia e Suporte Técnico com Transparência e Segurança Digital</p>
+</section>
+
+<div class="container">
+
+    <section id="suporte" style="text-align: center; margin-bottom: 5rem;">
+        <h2 style="color: var(--primary); margin-bottom: 20px;">Atendimento Remoto Via AnyDesk</h2>
+        <p>A forma mais rápida de resolver problemas de software e lentidão.</p>
+        <br>
+        <a href="https://anydesk.com/pt/downloads" target="_blank" class="btn-action" style="background: var(--accent);" title="Site oficial AnyDesk">
+            <i class="fas fa-download"></i> BAIXAR ANYDESK AGORA
+        </a>
+    </section>
+
+    <section id="servicos">
+        <h2 style="text-align: center; margin-bottom: 40px;">Nossas Especialidades</h2>
+        <div class="services-grid">
+            
+            <div class="service-card">
+                <img src="https://images.unsplash.com/photo-1591405351990-4726e331f141?auto=format&fit=crop&w=500&q=60" alt="Manutenção de Hardware">
+                <div class="service-card-body">
+                    <h3>Hardware e Performance</h3>
+                    <p>Upgrade de SSD, limpeza técnica, troca de pasta térmica e reparos físicos.</p>
+                    <div class="tax-badge">
+                        <i class="fas fa-truck"></i> Serviço Presencial: Sujeito a Taxa de Visita
+                    </div>
+                </div>
+            </div>
+
+            <div class="service-card">
+                <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=500&q=60" alt="Segurança Digital">
+                <div class="service-card-body">
+                    <h3>Software e Segurança</h3>
+                    <p>Remoção de vírus, backup em nuvem, otimização de Windows e redes Wi-Fi.</p>
+                    <p style="color: var(--secondary); font-weight: bold; margin-top: 15px;">Realizado via Suporte Remoto</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="diagnostico" class="diag-box">
+        <h2>Pré-Diagnóstico On-line</h2>
+        <p>Selecione os problemas e fale com o técnico:</p>
+        
+        <div class="lgpd-container">
+            <label>
+                <input type="checkbox" id="aceito_lgpd">
+                <span>Estou ciente e autorizo o acesso remoto para fins técnicos, bem como o tratamento dos meus dados conforme a <strong>LGPD (Lei Geral de Proteção de Dados)</strong>. <a href="javascript:void(0)" onclick="openModal()" style="color: var(--primary);">Ler termos completos.</a></span>
+            </label>
+        </div>
+
+        <button class="btn-action" onclick="enviarWhatsApp()">
+            <i class="fab fa-whatsapp"></i> INICIAR ATENDIMENTO SEGURO
+        </button>
+    </section>
+
+</div>
+
+<footer id="contato">
+    <div class="tax-banner-footer">
+        <i class="fas fa-exclamation-triangle"></i> IMPORTANTE: Para atendimentos presenciais (no local do cliente), é cobrada uma Taxa de Visita Técnica que varia conforme a região.
+    </div>
+
+    <div style="margin-bottom: 30px;">
+        <h2 style="margin-bottom: 20px; color: white;">Fale com GCN Serviços</h2>
+        <p><i class="fab fa-whatsapp"></i> (11) 93362-2707</p>
+        <p><i class="fas fa-envelope"></i> gcnservico@hotmail.com</p>
+    </div>
+    <p style="font-size: 0.8rem; opacity: 0.5;">&copy; 2026 GCN Serviços | Tecnologia & Transparência</p>
+    
+    <div class="visitor-counter" style="margin-top: 30px; opacity: 1 !important;">
+        <span style="font-size: 0.9rem; color: #fff; margin-bottom: 10px; display: block;">Contador de Acessos:</span>
+        <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgcnservicos.github.io&count_bg=%2328A745&title_bg=%23555555&icon=opsgenie.svg&icon_color=%23E7E7E7&title=visitas&edge_flat=false" alt="Acessos GCN" style="height: 28px; min-width: 100px;">
+    </div>
+</footer>
+
+<div id="modalLGPD" class="modal">
+    <div class="modal-content">
+        <h3>Termos de Privacidade (LGPD)</h3>
+        <hr style="margin: 15px 0;">
+        <p>1. O acesso remoto via AnyDesk é temporário e controlado pelo cliente.</p>
+        <p>2. Nenhum dado pessoal será copiado sem autorização prévia.</p>
+        <p>3. As informações de contato são usadas apenas para suporte e garantia.</p>
+        <br>
+        <button class="btn-action" onclick="closeModal()" style="width: 100%;">FECHAR E VOLTAR</button>
+    </div>
+</div>
+
+<script>
+    function openModal() { document.getElementById('modalLGPD').style.display = 'flex'; }
+    function closeModal() { document.getElementById('modalLGPD').style.display = 'none'; }
+
+    function enviarWhatsApp() {
+        const checkbox = document.getElementById('aceito_lgpd');
+        if (!checkbox.checked) {
+            alert("⚠️ Você precisa aceitar os termos da LGPD para iniciar o suporte com segurança.");
+            return;
+        }
+        
+        const texto = encodeURIComponent("Olá GCN Serviços! Aceito os termos da LGPD e gostaria de solicitar um suporte técnico.");
+        window.open(`https://wa.me/5511933622707?text=${texto}`, '_blank');
+    }
+</script>
+
+</body>
+</html>
